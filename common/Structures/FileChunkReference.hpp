@@ -1,4 +1,9 @@
 #include <cstddef>
+#include <cstring>
+#include <ostream>
+#include <iomanip>
+
+#include "FileChunkReference32.hpp"
 
 /**
   * @brief Basic Class for FileChunkReference* classes

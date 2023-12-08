@@ -117,4 +117,35 @@ class FreeChunkListFragment {
         vector<FileChunkReference64> fcrFreeChunk;
 };
 
+/**
+ * @brief Construct a new Free Chunk List Fragment:: Free Chunk List Fragment object
+ * 
+ * @param len 
+ */
+inline FreeChunkListFragment::FreeChunkListFragment(size_t len) {
+    size = len;
+};
+
+/**
+ * @brief 
+ * 
+ * @param pStart 
+ * @param offset 
+ * @return size_t 
+ */
+inline size_t FreeChunkListFragment::Deserialize(char *pStart, size_t offset) {
+    char *pIndex = pStart + offset;
+   
+    pIndex += Primitive::Deserialize(crc, pIndex);
+    pIndex += FileChunkReference64x32::Deserialize(fcrNextChunk, pIndex);
+    size_t count  = (sizeof(FreeChunkListFragment) - 16) / 16;
+    for ( size_t i = 0; i < count; ++i) {
+        FileChunkReference64 item;
+        pIndex += item.Deserialize(pIndex);
+        fcrFreeChunk.push_back(item);
+    };
+
+    return static_cast<size_t>(pIndex - pStart - offset);
+};
+
 #endif
