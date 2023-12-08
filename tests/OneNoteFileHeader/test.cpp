@@ -9,11 +9,9 @@ using namespace std;
 const uint HEADER_SIZE = 1024;
 
 void printHex(char *bytes) {
-    const uint WIDE = 4;
-
-    for (uint  i = 0; i < HEADER_SIZE;) {
-        if ( ((i++) % 16) == 0) {
-            cout << setfill(' ') << setw(WIDE + 2) << endl;
+    for (uint  i = 0; i < HEADER_SIZE; ++i) {
+        if ( i % 16 == 0) {
+            cout << setfill(' ') << setw(2) << endl;
         }
        cout << "0x" << setfill('0') << hex << setw(sizeof(char)*2) << (int)(unsigned char) bytes[i] << " ";
     };
@@ -24,9 +22,7 @@ char* readFile(string filename) {
     ifstream oneFile;
     streampos size;
     
-    char *memblock;
-    // Get memory block for whole file
-    memblock = new char [size];
+    char *memblock = NULL;
 
     oneFile.open(filename, ios::in | ios::binary | ios::ate);
     cerr << "Opening file: " << filename << " ... ";
@@ -41,17 +37,19 @@ char* readFile(string filename) {
             return NULL;
         }
 
+        // Get memory block for whole file
+        memblock = new char [size];
+
         oneFile.seekg(0, ios::beg);
         oneFile.read(memblock, size);
         cerr << "File size: " << (size) << " bytes." << endl;
+        oneFile.close();
 
         printHex(memblock);
 
-        oneFile.close();
-
     } else {
         // Something wrong happened and file was not opened
-        delete[] memblock;
+        if (memblock != NULL) delete[] memblock;
         return NULL;
     }
 
@@ -73,7 +71,7 @@ int main(int argc, char *argv[]) {
     }
     OneNoteFileHeader header;
     auto len = header.Deserialize(pBytesArray);
-    cout << "Header len: " << len << endl;
+    cout << "Header len: " << dec << len << endl;
     header.Print();
 
     delete [] pBytesArray;

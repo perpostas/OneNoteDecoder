@@ -145,7 +145,7 @@ inline size_t OneNoteFileHeader::Deserialize(char *pStart) {
     byteIdx += Primitive::Deserialize(bnNewestWritten, byteIdx);
     byteIdx += Primitive::Deserialize(rgbReserved, byteIdx);
 
-    return static_cast<size_t>(byteIdx - pStart);;
+    return static_cast<size_t>(byteIdx - pStart);
 };
 
 /**
