@@ -1,14 +1,3 @@
-/**
- * @file BitReader.hpp
- * @author Alpa (you@domain.com)
- * @brief A wrapper over a standart C++ bitstream
- * @version 0.1
- * @date 2023-12-06
- * 
- * @copyright Copyleft 2023
- * 
- */
-
 #include <bitset>
 
 template <typename T>
