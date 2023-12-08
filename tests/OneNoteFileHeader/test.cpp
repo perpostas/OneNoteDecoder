@@ -3,8 +3,8 @@
 #include <cstdlib>
 #include <fstream>
 #include <new>
-#include "../../common/FileStructure/Header.hpp"
-#include "../../common/Helpers/BinFile.hpp"
+#include "../../FileStructure/Header.hpp"
+#include "../../Helpers/BinFile.hpp"
 
 using namespace std;
 

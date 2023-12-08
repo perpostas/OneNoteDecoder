@@ -4,8 +4,8 @@
 #include <iostream>
 #include <unistd.h>
 
-#include "./common/FileStructure/OneNoteRevisionStore.hpp"
-#include "./common/Helpers/LogDuration.hpp"
+#include "FileStructure/OneNoteRevisionStore.hpp"
+#include "Helpers/LogDuration.hpp"
 
 #define DEBUG false
 

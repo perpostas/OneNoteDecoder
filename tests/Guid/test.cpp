@@ -1,9 +1,8 @@
-#include "../../common/Structures/Guid.hpp"
 #include <cstdint>
 #include <iostream>
 #include <ostream>
-
 #include <assert.h> 
+#include "../../Structures/Guid.hpp"
 
 using namespace std;
 
