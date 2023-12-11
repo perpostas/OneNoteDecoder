@@ -1,8 +1,12 @@
+#include <cstring>
 #include <gtest/gtest.h>
+#include <string>
 #include "../../Helpers/BinFile.hpp"
 
+const uint HEADER_SIZE = 1024;
+const std::string HEADER_FILENAME = "../test_cases/header.bin";
 
-const std::vector<uint8_t> binHeader = { 
+const uint8_t binArray[] = {
 0xe4, 0x52, 0x5c, 0x7b, 0x8c, 0xd8, 0xa7, 0x4d, 0xae, 0xb1, 0x53, 0x78, 0xd0, 0x29, 0x96, 0xd3, 
 0x92, 0x21, 0x53, 0x32, 0xa1, 0x2f, 0x1a, 0x4b, 0xbf, 0xb2, 0xbb, 0x9e, 0xb2, 0xed, 0x69, 0x88, 
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -71,21 +75,25 @@ const std::vector<uint8_t> binHeader = {
 
 #include <cstdint>
 
-TEST(BinFile, ReadToContainer0) {
-    const std::vector<uint8_t> binaryFileContent = BinFile::ReadToContainer("../test_cases/header.bin");
+TEST(BinFile, ReadToBytesVector) {
+    // n is required for vector initialization from array
+    const int n = sizeof(binArray) / sizeof(binArray[0]);
 
-    //std::cout << std::endl << "Size of const header:" << binHeader.size() << std::endl;
-    //BinFile::PrintToHex(binHeader);
-
-    //std::cout << std::endl << "Size of readed file: " << binHeader.size() << std::endl;
-    //BinFile::PrintToHex(binHeader);
-    
-    //binFile.PrintToHex(binHeader);
+    const std::vector<uint8_t> 
+        binaryFileContent = BinFile::ReadToBytesVector(HEADER_FILENAME),
+        binHeader (binArray, binArray + n);
 
     // Expecting binaryFileContent is equal binHeader
     EXPECT_EQ(
         binHeader, binaryFileContent
-        //memcmp(&binaryFileContent, &binHeader, 1024), 
-        //0
+    );
+}
+
+TEST(BinFile, ReadToBytesArray) {
+    const char *pBuf = BinFile::ReadToBufferArray(HEADER_FILENAME, HEADER_SIZE);
+
+    EXPECT_EQ(
+        memcmp(pBuf, &binArray, HEADER_SIZE), 
+        0
     );
 }

@@ -91,7 +91,6 @@ inline bool Guid::Compare(const Guid &g1, const Guid &g2) {
 
 
 inline string Guid::ToString(Guid const &guid) {
-  cout << guid << endl;
   std::ostringstream ss;
   ss << guid;
   return ss.str();

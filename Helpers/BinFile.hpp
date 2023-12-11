@@ -32,7 +32,7 @@ class BinFile {
          * @param endPos 
          * @return std::string 
          */
-        static const std::vector<uint8_t> ReadToContainer(std::string filename) {
+        static const std::vector<uint8_t> ReadToBytesVector(std::string filename) {
             std::ifstream in(filename, std::ios::in | std::ios::binary);
             if (in) {
                 // 3-times slower than in.Read
@@ -56,7 +56,7 @@ class BinFile {
          * @param nBytes 
          * @return char* 
          */
-        const static char* ReadToBuf(std::string filename, uint nBytes) {
+        const static char* ReadToBufferArray(std::string filename, uint nBytes) {
             std::ifstream oneFile;
             std::streampos fileSize;
             
@@ -125,18 +125,18 @@ class BinFile {
          * 
          * @param bytes 
          */
-        //void PrintToHex(const char *bytes) {
-        //    for (uint  i = 0; i < bytesNum; ++i) {
-        //        if ( i % 16 == 0) {
-        //            std::cout << std::setfill(' ') << std::setw(2) << std::endl;
-        //        }
-        //        std::cout << "0x" 
-        //                    << std::setfill('0') 
-        //                    << std::hex << std::setw(sizeof(char)*2) 
-        //                    << (int)(unsigned char) bytes[i] 
-        //                    << " ";
-        //    }
+        void PrintToHex(const char *bytes, uint bytesNum) {
+            for (uint  i = 0; i < bytesNum; ++i) {
+                if ( i % 16 == 0) {
+                    std::cout << std::setfill(' ') << std::setw(2) << std::endl;
+                }
+                std::cout << "0x" 
+                            << std::setfill('0') 
+                            << std::hex << std::setw(sizeof(char)*2) 
+                            << (int)(unsigned char) bytes[i] 
+                            << " ";
+            }
             
-        //    std::cout << std::endl;
-        //}
+            std::cout << std::endl;
+        }
 };

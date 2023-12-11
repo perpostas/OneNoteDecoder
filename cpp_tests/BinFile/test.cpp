@@ -14,10 +14,10 @@ int main(int argc, char *argv[]) {
     }
 
     string filename = argv[1];
-    BinFile binFile(filename);
+    //BinFile binFile(filename);
 
-    vector<uint8_t> binaryFileContent = binFile.ReadToContainer();
-    binFile.PrintToHex(binaryFileContent);
+    vector<uint8_t> binaryFileContent = BinFile::ReadToBytesVector(filename);
+    BinFile::PrintToHex(binaryFileContent);
 
     exit(EXIT_SUCCESS);
 };
