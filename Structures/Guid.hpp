@@ -17,12 +17,13 @@ public:
   Guid(uint32_t guidChunk1, uint16_t guidChunk2, uint16_t guidChunk3,
        char guidChunk4[8]);
   size_t Deserialize(char *begin);
-  bool CompareTo(Guid &guid);
+  static string ToString(const Guid &guid);
+  static bool Compare(const Guid &guid1, const Guid &guid2);
 
   uint32_t Data1;
   uint16_t Data2;
   uint16_t Data3;
-  char Data4[8];
+  uint8_t Data4[8];
 
 private:
   friend ostream &operator<<(ostream &os, const Guid &guid);
@@ -39,17 +40,17 @@ private:
  */
 
 inline Guid::Guid() noexcept {
-  this->Data1 = {};
-  this->Data2 = {};
-  this->Data3 = {};
-  this->Data4[8] = {};
+  Data1 = {0};
+  Data2 = {0};
+  Data3 = {0};
+  memset(Data4, 0, sizeof(Data4));
 };
 
 inline Guid::Guid(uint32_t guidChunk1, uint16_t guidChunk2, uint16_t guidChunk3, char guidChunk4[8]) {
-  this->Data1 = guidChunk1;
-  this->Data2 = guidChunk2;
-  this->Data3 = guidChunk3;
-  memcpy(this->Data4, guidChunk4, sizeof(this->Data4));
+  Data1 = guidChunk1;
+  Data2 = guidChunk2;
+  Data3 = guidChunk3;
+  memcpy(Data4, guidChunk4, sizeof(Data4));
 };
 
 /**
@@ -83,9 +84,19 @@ inline size_t Guid::Deserialize(char *begin) {
  * @return true 
  * @return false 
  */
-inline bool Guid::CompareTo(Guid &guid) {
-  return memcmp(this, &guid, sizeof(Guid)) == 0 ? true: false;
+inline bool Guid::Compare(const Guid &g1, const Guid &g2) {
+  int res = memcmp(&g1, &g2, sizeof(Guid));
+  return (res == 0) ? true : false;
 };
+
+
+inline string Guid::ToString(Guid const &guid) {
+  cout << guid << endl;
+  std::ostringstream ss;
+  ss << guid;
+  return ss.str();
+};
+
 
 inline ostream &operator<<(ostream &os, const Guid &guid) {
   return os 

@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <iomanip>
+#include <vector>
 
 
 /**
@@ -12,8 +13,9 @@
  */
 class BinFile {
     private:
-        std::string fileName;
-        uint bytesNum;
+        //std::string fileName;
+        //uint bytesNum;
+        //std::string content;
 
     public:
         /**
@@ -21,9 +23,32 @@ class BinFile {
         * 
         * @param name 
         */
-        BinFile(std::string name) {
-            fileName = name;
-        };
+        BinFile() noexcept;
+
+        /**
+         * @brief ReadToContainer is a function to read binary file content into STL container
+         * 
+         * @param startPos 
+         * @param endPos 
+         * @return std::string 
+         */
+        static const std::vector<uint8_t> ReadToContainer(std::string filename) {
+            std::ifstream in(filename, std::ios::in | std::ios::binary);
+            if (in) {
+                // 3-times slower than in.Read
+                // https://insanecoding.blogspot.com/2011/11/how-to-read-in-file-in-c.html
+                // https://stackoverflow.com/questions/63789443/i-cant-understand-the-use-of-stdistream-iterator
+
+                std::istreambuf_iterator<char> 
+                    itBegin(in), 
+                    itEnd;
+
+                return std::vector<uint8_t> (itBegin, itEnd);;
+            }
+            
+            throw(errno);
+        }
+
 
         /**
          * @brief Reads N bytes from bin file
@@ -31,18 +56,18 @@ class BinFile {
          * @param nBytes 
          * @return char* 
          */
-        char* Read(uint nBytes) {
+        const static char* ReadToBuf(std::string filename, uint nBytes) {
             std::ifstream oneFile;
             std::streampos fileSize;
             
             // Unit bytesNum private variable
-            bytesNum = nBytes;
+            // bytesNum = nBytes;
             
             // Pointer to buffer
             char *buffer = NULL;
 
-            oneFile.open(fileName, std::ios::in | std::ios::binary | std::ios::ate);
-            std::cerr << "Opening file: " << fileName << " ... ";
+            oneFile.open(filename, std::ios::in | std::ios::binary | std::ios::ate);
+            std::cerr << "Opening file: " << filename << " ... ";
             if (oneFile.is_open()) {
                 std::cerr << "OK" << std::endl;
 
@@ -72,25 +97,46 @@ class BinFile {
             }
 
             return buffer;
-        };
+        }
+
+
+        /**
+         * @brief Prints out vector of bytes to cout
+         * 
+         * @tparam std::vector<uint8_t> &vec 
+         * @param str 
+         */
+        const static void PrintToHex(const std::vector<uint8_t> &vec) {
+            uint8_t counter = {0};
+            const uint indentLeft = 0;
+
+            for (auto &el: vec) {
+                if ( ((counter++) % 16) == 0) {
+                    std::cout << std::setfill(' ') << std::setw(indentLeft + 2) << std::endl;
+                }
+                std::cout << "0x" << std::setfill('0') << std::hex << std::setw(sizeof(char)*2) << (int)(unsigned char)el << " ";
+            }
+            std::cout << std::endl;
+        }
+
 
         /**
          * @brief Prints bin file in hex mode
          * 
          * @param bytes 
          */
-        void printHex(char *bytes) {
-            for (uint  i = 0; i < bytesNum; ++i) {
-                if ( i % 16 == 0) {
-                    std::cout << std::setfill(' ') << std::setw(2) << std::endl;
-                }
-                std::cout << "0x" 
-                            << std::setfill('0') 
-                            << std::hex << std::setw(sizeof(char)*2) 
-                            << (int)(unsigned char) bytes[i] 
-                            << " ";
-            }
+        //void PrintToHex(const char *bytes) {
+        //    for (uint  i = 0; i < bytesNum; ++i) {
+        //        if ( i % 16 == 0) {
+        //            std::cout << std::setfill(' ') << std::setw(2) << std::endl;
+        //        }
+        //        std::cout << "0x" 
+        //                    << std::setfill('0') 
+        //                    << std::hex << std::setw(sizeof(char)*2) 
+        //                    << (int)(unsigned char) bytes[i] 
+        //                    << " ";
+        //    }
             
-            std::cout << std::endl;
-        }
+        //    std::cout << std::endl;
+        //}
 };

@@ -21,12 +21,12 @@ int main(int argc, char *argv[]) {
     string filename = argv[1];
     BinFile binFile(filename);
 
-    char *pBytesArray = binFile.Read(HEADER_SIZE);
+    char *pBytesArray = binFile.ReadToBuf(HEADER_SIZE);
     if (pBytesArray == NULL) {
         cerr << "BinFile::Read returned null pointer" << endl;
         exit(EXIT_FAILURE);
     }
-    binFile.printHex(pBytesArray);
+    binFile.PrintToHex(pBytesArray);
 
     OneNoteFileHeader header;
     auto len = header.Deserialize(pBytesArray);
