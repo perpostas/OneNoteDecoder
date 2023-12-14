@@ -81,6 +81,7 @@
 #include "Guid.hpp"
 #include "Primitive.hpp"
 
+
 class ExtendedGuid {
     public:
         Guid guid;

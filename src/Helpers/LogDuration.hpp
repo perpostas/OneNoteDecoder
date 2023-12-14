@@ -2,6 +2,11 @@
 #include <iostream>
 #include <string>
 
+/**
+    Helper class for measuring code execution time
+    Usage: LogDuration ld("Decode:") in selected scope
+    Once scope is left distructor called and execution time printed out
+*/
 class LogDuration {
 public:
     LogDuration(std::string id)

@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <cstring>
 #include <iomanip>
+#include <sstream>
 
 using namespace std;
 
