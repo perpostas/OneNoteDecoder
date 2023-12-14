@@ -1,10 +1,10 @@
 #include <cstring>
 #include <gtest/gtest.h>
 #include <string>
-#include "../../Helpers/BinFile.hpp"
+#include "../../src/Helpers/BinFile.hpp"
 
 const uint HEADER_SIZE = 1024;
-const std::string HEADER_FILENAME = "../test_cases/header.bin";
+const std::string HEADER_FILENAME = "../../tests/data/header.bin";
 
 const uint8_t binArray[] = {
 0xe4, 0x52, 0x5c, 0x7b, 0x8c, 0xd8, 0xa7, 0x4d, 0xae, 0xb1, 0x53, 0x78, 0xd0, 0x29, 0x96, 0xd3, 

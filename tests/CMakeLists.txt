@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(all_tests)
+project(unit_tests)
 
 # GoogleTest requires at least C++14
 set(CMAKE_CXX_STANDARD 14)
@@ -17,7 +17,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 file(GLOB_RECURSE headers
-	${CMAKE_CURRENT_SOURCE_DIR}/test_cases/*.hpp)
+	${CMAKE_CURRENT_SOURCE_DIR}/unit_tests/*.hpp)
 
 set(testcases testcases.hpp)
 
@@ -29,13 +29,13 @@ foreach(file IN LISTS headers)
 endforeach()
 
 add_executable(
-  all_tests
-  all_tests.cpp
+  unit_tests
+  unit_tests.cpp
 )
 target_link_libraries(
-  all_tests
+  unit_tests
   GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(all_tests)
+gtest_discover_tests(unit_tests)

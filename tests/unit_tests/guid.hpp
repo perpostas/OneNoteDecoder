@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../../Structures/Guid.hpp"
+#include "../../src/Structures/Guid.hpp"
 
 TEST(Guid, ToString0) {
     // Zero guid

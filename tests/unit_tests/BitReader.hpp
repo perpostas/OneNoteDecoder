@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <cstdint>
-#include "../../Helpers/BitReader.hpp"
+#include "../../src/Helpers/BitReader.hpp"
 
 #include <iostream>
 

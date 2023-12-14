@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../../Helpers/BinFile.hpp"
+#include "../../../src/Helpers/BinFile.hpp"
 
 using namespace std;
 
